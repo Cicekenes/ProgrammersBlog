@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿using ProgrammersBlog.Shared.Entities.Abstract;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProgrammersBlog.Entities.DTOs.CategoryDTOs
 {
-    public class CategoryUpdateDto
+    public class CategoryUpdateDto : DtoGetBase
     {
         [Required]
         public int Id { get; set; }

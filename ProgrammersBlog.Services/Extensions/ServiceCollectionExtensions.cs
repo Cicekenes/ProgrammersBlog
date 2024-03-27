@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProgrammersBlog.Data.Abstract;
 using ProgrammersBlog.Data.Concrete;
@@ -6,20 +7,15 @@ using ProgrammersBlog.Data.Concrete.EntityFramework.Contexts;
 using ProgrammersBlog.Entities.Concrete;
 using ProgrammersBlog.Services.Abstract;
 using ProgrammersBlog.Services.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Services.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection LoadMyServices(this IServiceCollection services,string connectionString)
+        public static IServiceCollection LoadMyServices(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<ProgrammersBlogContext>(options=> options.UseSqlServer(connectionString));
+            services.AddDbContext<ProgrammersBlogContext>(options => options.UseSqlServer(connectionString).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
             services.AddIdentity<User, Role>(options =>
             {
                 //User password options
@@ -32,14 +28,19 @@ namespace ProgrammersBlog.Services.Extensions
 
                 //User Username and Email options
                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+$"; //Kullanıcı adı oluştururken izin verilen karakterler
-                options.User.RequireUniqueEmail=true; // Tek email adresi bulunsun.
+                options.User.RequireUniqueEmail = true; // Tek email adresi bulunsun.
 
             })
                 .AddEntityFrameworkStores<ProgrammersBlogContext>();
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                options.ValidationInterval = TimeSpan.FromMinutes(15);
+            });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<IArticleService, ArticleManager>();
             services.AddScoped<ICommentService, CommentManager>();
+            services.AddSingleton<IMailService, MailManager>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
         }

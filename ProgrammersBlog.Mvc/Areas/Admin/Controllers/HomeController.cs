@@ -12,7 +12,6 @@ using System.Diagnostics;
 namespace ProgrammersBlog.Mvc.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin,Editor")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -28,7 +27,7 @@ namespace ProgrammersBlog.Mvc.Controllers
             _commentService = commentService;
             _userManager = userManager;
         }
-
+        [Authorize(Roles = "SuperAdmin,AdminArea.Home.Read")]
         public async Task<IActionResult> Index()
         {
             var categoriesCountResult = await _categoryService.CountByNonDeletedAsync();
@@ -48,7 +47,7 @@ namespace ProgrammersBlog.Mvc.Controllers
                     ArticlesCount = articlesCountResult.Data,
                     CommentsCount = commentsCountResult.Data,
                     UsersCount = usersCountResult,
-                    Articles=articlesResult.Data
+                    Articles = articlesResult.Data
                 });
             }
             return NotFound();

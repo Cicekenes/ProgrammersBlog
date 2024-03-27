@@ -1,11 +1,5 @@
-﻿using ProgrammersBlog.Entities.Concrete;
-using ProgrammersBlog.Entities.DTOs.CategoryDTOs;
+﻿using ProgrammersBlog.Entities.DTOs.CategoryDTOs;
 using ProgrammersBlog.Shared.Utilities.Results.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Services.Abstract
 {
@@ -21,6 +15,7 @@ namespace ProgrammersBlog.Services.Abstract
         Task<IDataResult<CategoryListDto>> GetAllAsync();
         Task<IDataResult<CategoryListDto>> GetAllAsyncByNonDeleted();
         Task<IDataResult<CategoryListDto>> GetAllAsyncByNonDeletedAndActive();
+        Task<IDataResult<CategoryListDto>> GetAllAsyncByDeleted();
         /// <summary>
         /// Verilen CategoryAddDto ve CreatedByName parametrelerine ait bilgiler ile yeni bir Category ekler.
         /// </summary>
@@ -30,6 +25,7 @@ namespace ProgrammersBlog.Services.Abstract
         Task<IDataResult<CategoryDto>> AddAsync(CategoryAddDto categoryAddDto, string createdByName); //Datayı dönmeye gerek olmayan durumlarda IResult, dönülmesi gereken durumlarda IDataResult
         Task<IDataResult<CategoryDto>> UpdateAsync(CategoryUpdateDto categoryUpdateDto, string modifiedByName);
         Task<IDataResult<CategoryDto>> DeleteAsync(int categoryId, string modifiedByName); //isDeleted değerini false set etme.
+        Task<IDataResult<CategoryDto>> UndoDeleteAsync(int categoryId, string modifiedByName); //isDeleted değerini false set etme.
         Task<IResult> HardDelete(int categoryId); //Gerçek silme işlemi
         Task<IDataResult<int>> CountAsync();
         Task<IDataResult<int>> CountByNonDeletedAsync(); // ctrl + 2 kere r

@@ -1,20 +1,16 @@
 ﻿using ProgrammersBlog.Entities.Concrete;
-using System;
-using System.Collections.Generic;
+using ProgrammersBlog.Shared.Entities.Abstract;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Entities.DTOs.ArticleDTOs
 {
-    public class ArticleAddDto
+    public class ArticleAddDto : DtoGetBase
     {
         [DisplayName("Başlık")]
-        [Required(ErrorMessage ="{0} alanı boş geçilmemelidir.")]
-        [MaxLength(100,ErrorMessage ="{0} alanı {1} karakterden büyük olmamalıdır")]
-        [MinLength(5,ErrorMessage ="{0} alanı {1} karakterden küçük olmamalıdır")]
+        [Required(ErrorMessage = "{0} alanı boş geçilmemelidir.")]
+        [MaxLength(100, ErrorMessage = "{0} alanı {1} karakterden büyük olmamalıdır")]
+        [MinLength(5, ErrorMessage = "{0} alanı {1} karakterden küçük olmamalıdır")]
         public string Title { get; set; }
         [DisplayName("İçerik")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir.")]
@@ -27,7 +23,7 @@ namespace ProgrammersBlog.Entities.DTOs.ArticleDTOs
         public string Thumbnail { get; set; }
         [DisplayName("Tarih")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir.")]
-        [DisplayFormat(ApplyFormatInEditMode =true,DataFormatString ="{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
         [DisplayName("Seo Yazar")]
         [Required(ErrorMessage = "{0} alanı boş geçilmemelidir.")]

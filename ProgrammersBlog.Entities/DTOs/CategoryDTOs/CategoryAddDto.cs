@@ -1,14 +1,15 @@
-﻿using System.ComponentModel;
+﻿using ProgrammersBlog.Shared.Entities.Abstract;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProgrammersBlog.Entities.DTOs.CategoryDTOs
 {
-    public class CategoryAddDto
+    public class CategoryAddDto : DtoGetBase
     {
         [DisplayName("Kategori Adı")]
         [Required(ErrorMessage = "{0} boş geçilmemelidir.")]
-        [MaxLength(70,ErrorMessage ="{0} {1} karakterden büyük olmamalıdır.")]
-        [MinLength(3,ErrorMessage ="{0} {1} karakterden az olmamalıdır.")]
+        [MaxLength(70, ErrorMessage = "{0} {1} karakterden büyük olmamalıdır.")]
+        [MinLength(3, ErrorMessage = "{0} {1} karakterden az olmamalıdır.")]
         public string Name { get; set; }
         [DisplayName("Kategori Açıklaması")]
         [MaxLength(500, ErrorMessage = "{0} {1} karakterden büyük olmamalıdır.")]
